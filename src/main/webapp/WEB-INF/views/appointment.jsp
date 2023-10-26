@@ -10,6 +10,8 @@
 <h1 style="text-align:center;">예약하기</h1>
 ${list}
 
+
+<form action="/adetail" method="POST">
 <table border="1">
 	<tr class="row">
 		<th class="col-1">이름</th>
@@ -26,9 +28,10 @@ ${list}
 </table>
 
 
-${detail}
 
 <button type="submit">예약하기</button>
-커밋테스트
+</form>
+
+
 </body>
 </html>

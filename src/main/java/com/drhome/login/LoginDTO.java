@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class LoginDTO {
 	
-	private String id, pw, mname;
+	private int count;
+	private String mid, mpw, mname, hospitallike;
 
 }

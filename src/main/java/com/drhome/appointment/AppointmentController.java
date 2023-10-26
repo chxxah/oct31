@@ -1,4 +1,4 @@
-package com.drhome.Appointment;
+package com.drhome.appointment;
 
 import java.util.List;
 import java.util.Map;
@@ -33,7 +33,13 @@ public class AppointmentController {
 		
 		List<Map<String, Object>> detail = appointmentService.detail(map);
 		
+		List<Map<String, Object>> time = appointmentService.time(map);
+		
+		List<Map<String, Object>> doctor = appointmentService.doctor(map);
+		
 		map.put("detail", detail);
+		map.put("time", time);
+		map.put("doctor", doctor);
 		
 		return "adetail";
 	}

@@ -1,4 +1,4 @@
-package com.drhome.Appointment;
+package com.drhome.appointment;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +18,14 @@ public class AppointmentService {
 
 	public List<Map<String, Object>> detail(Map<String, Object> map) {
 		return appointmentDAO.detail(map);
+	}
+
+	public List<Map<String, Object>> time(Map<String, Object> map) {
+		return appointmentDAO.time(map);
+	}
+
+	public List<Map<String, Object>> doctor(Map<String, Object> map) {
+		return appointmentDAO.doctor(map);
 	}
 	
 	

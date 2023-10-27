@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 	@Autowired MainService mainService;
 	
-	@GetMapping(value = { "/", "/index" })
+	@GetMapping(value = { "/", "/main" })
 	public String main() {
 		return "/main";
 	}

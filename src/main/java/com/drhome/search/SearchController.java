@@ -46,13 +46,12 @@ public class SearchController {
 	
 	@PostMapping("/search")
 	public String search(@RequestParam String keyword) {
-		System.out.println(keyword);
 		return "redirect:/hospital?keyword=" + keyword;
 	}
+	//한글로 바꾸기
 	
 	@GetMapping("/hospital")
 	public String hospitalList(@RequestParam String keyword) {
-		System.out.println(keyword);
 		return "/hospital";
 	}
 	

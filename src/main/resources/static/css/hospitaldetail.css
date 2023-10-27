@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+header {
+	background-color: gray;
+}
+
+header nav ul li {
+	display: inline-block;
+	list-style-type: none;
+}
+
+
+#available {
+	display: none;
+	color: green
+}
+
+#unavailable {
+	display: none;
+	color: red;
+}
+
+.detailMenu ul li {
+	display: inline-block;
+	list-style-type: none;
+}
+.todayInfo {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.today {
+  width: 50%;
+  box-sizing: border-box;
+   padding-bottom: 30px;
+}
+
+.timeInfo {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.day {
+  width: 50%;
+  box-sizing: border-box;
+  padding-bottom: 10px;
+}
+
+.star{
+	color: #FFB300;
+}
+.keyword{
+	display: inline-block;
+	border: 1px solid black;
+	font-size: 3px;
+}

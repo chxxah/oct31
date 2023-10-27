@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.drhome.hospitaldetail.HospitalDetailDAO">
+	<select id="findHospitalByHno" resultType="Map">
+		SELECT hname, haddr,
+		htelnumber, himg, hinfo, TIME_FORMAT(hopentime, '%H:%i') as hopentime,
+		TIME_FORMAT(hclosetime, '%H:%i') as hclosetime, hnightday,
+		TIME_FORMAT(hnightendtime, '%H:%i') as hnightendtime,
+		TIME_FORMAT(hbreaktime, '%H:%i') as hbreaktime,
+		TIME_FORMAT(hbreakendtime, '%H:%i') as hbreakendtime,
+		TIME_FORMAT(hholidayendtime, '%H:%i') as hholidayendtime,
+		hholiday,hparking
+		FROM hospital
+		where hno
+		=#{hno}
+	</select>
+	<select id="findDoctorByHno" resultType="Map">
+		SELECT dname, dimg, dpkind, dpkeyword 
+		FROM doctor d JOIN department dp ON d.dpno = dp.dpno
+		WHERE hno =#{hno}
+
+	</select>
+	
+	<select id="findReviewByHno">
+		SELECT m.mname, DATE_FORMAT(r.rdate, '%Y-%m-%d %H:%i') AS rdate , r.rrate, r.rimg, r.rcontent, r.rkeyword, r.rlike, d.dname
+		FROM review r JOIN doctor d on r.dno = d.dno JOIN member m on r.mno=m.mno
+		WHERE r.hno =#{hno} 
+	</select>	
+
+	<update id="hospitalUnlike">
+		UPDATE member
+		SET mhospitallike =
+		CASE
+		WHEN
+		mhospitallike LIKE CONCAT('%', ',', #{hname}, '%') THEN
+		REPLACE(mhospitallike, CONCAT(',', #{hname}), '')
+		WHEN mhospitallike
+		LIKE CONCAT('%',#{hname},'%') THEN REPLACE(mhospitallike,#{hname}, '')
+		ELSE mhospitallike
+		END
+		WHERE mno = 1;
+	</update>
+
+
+
+	<insert id="hospitalLike">
+		UPDATE member
+		SET mhospitallike =
+		CASE
+		WHEN
+		mhospitallike IS NULL OR mhospitallike = '' THEN #{hname}
+		ELSE
+		CONCAT(mhospitallike, ',', #{hname})
+		END
+		WHERE mno = '1';
+	</insert>
+
+
+</mapper>

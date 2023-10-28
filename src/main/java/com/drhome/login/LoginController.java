@@ -1,9 +1,7 @@
 package com.drhome.login;
 
 import java.util.Map;
-import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
@@ -29,7 +27,7 @@ public class LoginController {
 	@ResponseBody
 	@PostMapping("/loginCheck")
 	public String login(@RequestParam Map<String, Object> map, HttpSession session) {
-		//System.out.println(map);
+		// System.out.println(map);
 
 		JSONObject json = new JSONObject();
 		// 일치하는 아이디 체크
@@ -80,17 +78,41 @@ public class LoginController {
 
 		return "redirect:/login";
 	}
-	
+
 	@GetMapping("/findID")
 	public String findID() {
 
 		return "/findID";
+	}
+
+	@ResponseBody
+	@PostMapping("/findID")
+	public String findID(@RequestParam Map<String, Object> map) {
+		JSONObject json = new JSONObject();
+		System.out.println(map);
+		Map<String, Object> findID = loginService.findID(map);
+		System.out.println(findID);
+		json.put("findID", findID);
+
+		return json.toString();
 	}
 	
 	@GetMapping("/findPW")
 	public String findPW() {
 
 		return "/findPW";
+	}
+	
+	@ResponseBody
+	@PostMapping("/findPW")
+	public String findPW(@RequestParam Map<String, Object> map) {
+		JSONObject json = new JSONObject();
+		System.out.println(map);
+		Map<String, Object> findPW = loginService.findPW(map);
+		System.out.println(findPW);
+		json.put("findPW", findPW);
+
+		return json.toString();
 	}
 
 }

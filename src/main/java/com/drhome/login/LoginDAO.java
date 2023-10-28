@@ -13,4 +13,8 @@ public interface LoginDAO {
 
 	Map<String, Object> loginCheck(Map<String, Object> map);
 
+	Map<String, Object> findID(Map<String, Object> map);
+
+	Map<String, Object> findPW(Map<String, Object> map);
+
 }

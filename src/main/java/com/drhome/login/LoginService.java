@@ -22,5 +22,13 @@ public class LoginService {
 	public Map<String, Object> loginCheck(Map<String, Object> map) {
 		return loginDAO.loginCheck(map);
 	}
+
+	public Map<String, Object> findID(Map<String, Object> map) {
+		return loginDAO.findID(map);
+	}
+
+	public Map<String, Object> findPW(Map<String, Object> map) {
+		return loginDAO.findPW(map);
+	}
 	
 }

@@ -60,7 +60,28 @@
                 	
                     if(data.findID.mname != null || data.findID.mid != null){
                         $(".findIDInfo").css("color","green");
-                        $(".findIDInfo").text(data.findID.mname +" 님의 아이디는 " + data.findID.mid + " 입니다."); 
+                        $(".findIDInfo").text(data.findID.mname +" 님의 아이디는 " + data.findID.mid + " 입니다.  "); 
+						let id = data.findID.mid;
+                        
+                        if ($(".copyIDBtn").length === 0) {
+                            const copyBtn = $("<button id='copyIDBtn'>복사하기</button>");
+                            $(".findIDInfo").append(copyBtn);
+                            
+                            copyBtn.click(function() {
+                                const idText = id;
+                                copyToClipboard(idText);
+                                alert("아이디가 클립보드에 복사되었습니다.");
+                            });
+                        }
+
+                        function copyToClipboard(text) {
+                            const textarea = document.createElement("textarea");
+                            textarea.value = text;
+                            document.body.appendChild(textarea);
+                            textarea.select();
+                            document.execCommand("copy");
+                            document.body.removeChild(textarea);
+                        }
                     	
                       } else {
                     	    alert("일치하는 정보가 없습니다.");
@@ -83,7 +104,6 @@
 </head>
 <body>
 	<h1>아이디가 기억나지 않으세요?</h1>
-	<form action="findID" method="post">
 	<h5>이름</h5>
 	<input type="text" class="mname" name="mname" placeholder="이름을 입력해주세요." maxlength="11">
     <br>
@@ -100,7 +120,6 @@
 		<br>
 		<span class="findIDInfo"></span>
 		<span class="findIDInfo2"></span>
-	</form>
 		<br>
 		<br> 
 		<a href="./login">&nbsp;&nbsp;로그인 하러가기</a>

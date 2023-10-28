@@ -13,6 +13,8 @@
 <script type="text/javascript">
 
 	$(function(){
+		$("#copyPW").hide();
+
 		
 		$(".findPWBtn").click(function(){
 			let notNum = /[^0-9]/g;
@@ -75,8 +77,29 @@
                 	
                     if(data.findPW.mname != null || data.findPW.mid != null || data.findPW.mrrn !=null){
                         $(".findPWInfo").css("color","green");
-                        $(".findPWInfo").text(data.findPW.mname +" 님의 비밀번호는 " + data.findPW.mpw + " 입니다."); 
-                    	
+                        $(".findPWInfo").html(data.findPW.mname + " 님의 비밀번호는" + data.findPW.mpw + "입니다.  ");
+                        let pw = data.findPW.mpw;
+                        
+                        if ($(".copyPWBtn").length === 0) {
+                            const copyBtn = $("<button id='copyPWBtn'>복사하기</button>");
+                            $(".findPWInfo").append(copyBtn);
+                            
+                            copyBtn.click(function() {
+                                const pwText = pw;
+                                copyToClipboard(pwText);
+                                alert("비밀번호가 클립보드에 복사되었습니다.");
+                            });
+                        }
+
+                        function copyToClipboard(text) {
+                            const textarea = document.createElement("textarea");
+                            textarea.value = text;
+                            document.body.appendChild(textarea);
+                            textarea.select();
+                            document.execCommand("copy");
+                            document.body.removeChild(textarea);
+                        }
+                        
                       } else {
                     	    alert("일치하는 정보가 없습니다.");
                     	    $(".findPWInfo").css("color","blue");
@@ -91,14 +114,11 @@
             });//ajax 끝
 		}); //findIDBtn 끝
 	}); //function 끝
-
-	
 </script>
 
 </head>
 <body>
 	<h1>비밀번호가 기억나지 않으세요?</h1>
-	<form action="findID" method="post">
 	<h5>이름</h5>
 	<input type="text" class="mname" name="mname" placeholder="이름을 입력해주세요." maxlength="11">
     <br>
@@ -119,7 +139,6 @@
 		<br>
 		<span class="findPWInfo"></span>
 		<span class="findPWInfo2"></span>
-	</form>
 		<br>
 		<br> 
 		<a href="./login">&nbsp;&nbsp;로그인 하러가기</a>

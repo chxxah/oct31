@@ -8,18 +8,75 @@
 <meta charset="UTF-8">
 <title>Login</title>
 
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"
-    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
-    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 
+//getCookie() 사용 전 미리 로드할 수 있도록 배치 필요!!
+function getCookie(cookieName){
+   let x, y;
+   let val = document.cookie.split(";");
+   for(let i =0; i < val.length; i++){
+      x = val[i].substr(0, val[i].indexOf("="));
+      y = val[i].substr(val[i].indexOf("=") +1); // 저 시작위치부터 끝까지
+      //x = x.replace(/^\s+|\s+$/g, '');
+      x = x.trim();
+      if(x == cookieName){
+         return y;
+      }
+   }
+}
+
+//setCookie()
+function setCookie(cookieName, value, exdays){
+   let exdate = new Date();
+   exdate.setDate(exdate.getDate() + exdays);
+   let cookieValue = value + ((exdays == null) ? "" : ";expires=" + exdate.toGMTString());
+   document.cookie = cookieName+"="+cookieValue;
+}
+
+//deleteCookie()
+function deleteCookie(cookieName){
+   let expireDate = new Date();
+   expireDate.setDate(expireDate.getDate() - 1);
+   document.cookie = cookieName+"= "+";expires="+expireDate.toGMTString();
+}
+
     $(function() {
+    	   //쿠키 값 가져오기
+			let userID = getCookie("userID");
+			let setCookieY = getCookie("setCookie");
+			console.log(userID, setCookieY);
+    	   
+    	   //쿠키 검사 -> 쿠키가 있다면 해당 쿠키에서 id값 가져와서 id칸에 붙여넣기
+			if (setCookieY == 'Y') {
+			    $("#saveID").prop("checked", true);
+			    $("#mid").val(userID);
+			    $("#mpw").focus();
+			} else {
+			    $("#saveID").prop("checked", false);
+			}
+    	
         $('.loginBtn').click(function(event) {
             let mid = $("#mid").val();
             let mpw = $("#mpw").val();
             let notNum = /[^0-9]/g;
             
             $(".info").text("");
+            
+            if($("#saveID").is(":checked")){
+            	//setCookie
+            	setCookie("userID", mid, 7);
+            	setCookie("setCookie", "Y", 7);
+            } else{
+            	//deleteCookie()
+            	deleteCookie("userID");
+            	deleteCookie("setCookie");
+            	
+            }
             
             if(mid == ""){
                 $("#mid").val("");
@@ -82,8 +139,12 @@
                     alert("에러가 발생했습니다." + error);
                 }//에러끝
             });//ajax 끝
+
         });//로그인 버튼 클릭            
     });
+    
+ 
+    
 </script>
 
 </head>
@@ -95,7 +156,8 @@
         <br> 
 	        <a href="./findID"  class="findID">&nbsp;&nbsp;아이디 찾기</a> 
 	        <a href="./findPW" class="findPW">&nbsp;&nbsp;비밀번호 찾기</a> 
-	        <a href="./register" class="join"> &nbsp;&nbsp;회원가입</a> <br> 
+	        <a href="./register" class="join"> &nbsp;&nbsp;회원가입</a> <br>
+	        <input id="saveID" type="checkbox">아이디 저장하기
       	    <span class="info"></span><br>
        		<button class="loginBtn">Sign In →</button>
         <br>

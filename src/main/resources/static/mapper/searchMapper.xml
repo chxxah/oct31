@@ -3,8 +3,17 @@
 <mapper namespace="com.drhome.search.SearchDAO">
 
 	<select id="deparmentKeyword">
-		select dpkeyword
-		from department
+		SELECT dpkeyword
+		FROM department
+	</select>
+	
+	<select id="hospitalList" parameterType="String" resultType="Map">
+		SELECT h.hno, h.hname, h.haddr, h.hopentime, h.hclosetime, h.hnightday, h.hnightendtime, h.hholiday,
+		       h.hholidayendtime, h.hparking, d.*, COALESCE(ha.reviewAverage, 0) AS reviewAverage, COALESCE(ha.reviewCount, 0) AS reviewCount
+		FROM hospital h
+		LEFT JOIN doctorList d ON h.hno = d.hno
+		LEFT JOIN hospitalAverage ha ON h.hno = ha.hno
+		GROUP BY h.hno
 	</select>
 
 

@@ -1,5 +1,7 @@
 package com.drhome.search;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class SearchController {
 	
-	@Autowired SearchService searchService;
+	@Autowired private SearchService searchService;
+	@Autowired private SearchUtil searchUtil;
 	
 	@GetMapping("/search")
 	public String search(Model model) {
@@ -45,13 +48,20 @@ public class SearchController {
 	}
 	
 	@PostMapping("/search")
-	public String search(@RequestParam String keyword) {
-		return "redirect:/hospital?keyword=" + keyword;
+	public String search(@RequestParam String keyword) throws Exception {
+	    	// 한글로 들어올 때 인코딩 해주기
+	        String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8.toString());
+	        return "redirect:/hospital?keyword=" + encodedKeyword;
 	}
-	//한글로 바꾸기
 	
 	@GetMapping("/hospital")
-	public String hospitalList(@RequestParam String keyword) {
+	public String hospitalList(@RequestParam(required = false) String keyword, Model model) {
+		List<Map<String, Object>> hospitalList = searchService.hospitalList(keyword);
+		//[{dpkind=피부과, average=4.2, hholidayendtime=12:00:00, hparking=1, dpno=5, hnightday=수요일, dno=1, dpsymptom=피부 질환, hno=1, dpkeyword=티눈,아토피,안면홍조, COUNT(rno)=4, dspecialist=0, dgender=0, hopentime=09:00:00, hnightendtime=23:00:00, hname=연세세브란스, haddr=서울특별시 서대문구 신촌동 연세로 50-1, hclosetime=18:00:00, hholiday=0})
+		//[{dpkind=피부과, hholidayendtime=12:00:00, hparking=1, dpno=5, hnightday=수요일, dno=1, dpsymptom=피부 질환, hno=1, dpkeyword=티눈,아토피,안면홍조, dspecialist=0, dgender=0, reviewCount=4, hopentime=09:00:00, hnightendtime=23:00:00, hname=연세세브란스, haddr=서울특별시 서대문구 신촌동 연세로 50-1, hclosetime=18:00:00, hholiday=0, reviewAverage=4.2}
+
+		model.addAttribute("hospitalList", hospitalList);
+		model.addAttribute("keyword", keyword);
 		return "/hospital";
 	}
 	

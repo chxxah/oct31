@@ -14,4 +14,8 @@ public class SearchService {
 	public List<Map<String, Object>> departmentKeyword() {
 		return searchDAO.deparmentKeyword();
 	}
+
+	public List<Map<String, Object>> hospitalList(String keyword) {
+		return searchDAO.hospitalList(keyword);
+	}
 }

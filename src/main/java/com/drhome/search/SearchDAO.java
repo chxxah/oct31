@@ -10,4 +10,6 @@ public interface SearchDAO {
 
 	List<Map<String, Object>> deparmentKeyword();
 
+	List<Map<String, Object>> hospitalList(String keyword);
+
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.drhome.hospitaldetail.HospitalDetailDAO">
 	<select id="findHospitalByHno" resultType="Map">
-		SELECT hname, haddr,
+		SELECT hname, haddr, hno,
 		htelnumber, himg, hinfo, TIME_FORMAT(hopentime, '%H:%i') as hopentime,
 		TIME_FORMAT(hclosetime, '%H:%i') as hclosetime, hnightday,
 		TIME_FORMAT(hnightendtime, '%H:%i') as hnightendtime,
@@ -15,17 +15,40 @@
 		=#{hno}
 	</select>
 	<select id="findDoctorByHno" resultType="Map">
-		SELECT dname, dimg, dpkind, dpkeyword 
+		SELECT dno,dname, dimg,
+		dpkind, dpkeyword
 		FROM doctor d JOIN department dp ON d.dpno = dp.dpno
 		WHERE hno =#{hno}
 
 	</select>
-	
+
 	<select id="findReviewByHno">
-		SELECT m.mname, DATE_FORMAT(r.rdate, '%Y-%m-%d %H:%i') AS rdate , r.rrate, r.rimg, r.rcontent, r.rkeyword, r.rlike, d.dname
-		FROM review r JOIN doctor d on r.dno = d.dno JOIN member m on r.mno=m.mno
-		WHERE r.hno =#{hno} 
-	</select>	
+		SELECT m.mname, DATE_FORMAT(r.rdate, '%Y-%m-%d
+		%H:%i') AS rdate , r.rrate, r.rimg, r.rcontent, r.rkeyword, r.rlike,
+		d.dname
+		FROM review r JOIN doctor d on r.dno = d.dno JOIN member m on
+		r.mno=m.mno
+		WHERE r.hno =#{hno}
+	</select>
+
+	<select id="findDoctorByDno">
+		SELECT dname, dimg, dinfo, dgender, dcareer,
+		dspecialist, hname, haddr FROM doctor d join hospital h on d.hno=h.hno
+		WHERE
+		dno =#{dno}
+	</select>
+
+	<select id="countReviewByRate" resultType="Map">
+		SELECT
+		COUNT(CASE WHEN rrate = '5' THEN 1 END) AS veryGood,
+		COUNT(CASE WHEN rrate = '4' THEN 1 END) AS good,
+		COUNT(CASE WHEN rrate = '3' THEN 1 END) AS normal,
+		COUNT(CASE WHEN rrate = '2' THEN 1 END) AS bad,
+		COUNT(CASE WHEN rrate = '1' THEN 1 END) AS veryBad
+		FROM review
+		WHERE hno =#{hno};
+	</select>
+
 
 	<update id="hospitalUnlike">
 		UPDATE member

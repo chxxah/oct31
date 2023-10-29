@@ -11,7 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="./js/jquery-3.7.0.min.js"></script>
 
 <script type="text/javascript">
@@ -21,8 +21,13 @@
 		let closeTime = timeToNumber($('.closeTime').text());
 		let nowTime = timeToNumber($('#nowTime').val());
 
-		$('#todayHours').html(
-				$('.openTime').text() + " ~ " + $('.closeTime').text())
+		if (($('.openTime').text() == '') || ($('.closeTime').text() == '')) {
+			$('#todayHours').html('휴진')
+		} else {
+			$('#todayHours').html(
+					$('.openTime').text() + " ~ " + $('.closeTime').text())
+
+		}
 
 		$(document).on("click", ".xi-heart, .xi-heart-o", function() {
 			if ($(this).hasClass("xi-heart")) {
@@ -61,7 +66,6 @@
 	}
 </script>
 
-</script>
 
 </head>
 <body>
@@ -143,7 +147,7 @@
 
 		<c:if
 			test="${(now.dayOfWeek == '토요일' || now.dayOfWeek == '일요일') && hospital.hholiday ==0}">
-			<span>휴일입니다</span>
+			<span>휴진</span>
 		</c:if>
 	</div>
 
@@ -170,7 +174,7 @@
 			<div class="today todayBreakInfo">
 				<span>점심시간</span><br> <span id="todayBreak"> <c:if
 						test="${(now.dayOfWeek == '토요일' || now.dayOfWeek == '일요일') && hospital.hholiday ==0}">
-						휴일입니다
+						휴진
 					</c:if> <c:if
 						test="${(now.dayOfWeek == '토요일' || now.dayOfWeek == '일요일') && hospital.hholiday ==1}">
 						없음
@@ -239,7 +243,7 @@
 						토요일 <br> ${hospital.hopentime } ~ ${hospital.hholidayendtime }
 					</c:when>
 					<c:otherwise>
-						토요일 <br> 휴일
+						토요일 <br> 휴진
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -249,7 +253,7 @@
 						일요일 <br> ${hospital.hopentime } ~ ${hospital.hholidayendtime }
 					</c:when>
 					<c:otherwise>
-						일요일 <br> 휴일
+						일요일 <br> 휴진
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -297,6 +301,9 @@
 			<div>
 				<img alt="의사사진" src=""> <span>${doctorList.dname }</span>
 			</div>
+			<button onclick="location.href='./doctorDetail/'+${doctorList.dno}">
+				<i class="xi-angle-right xi-2x"></i>
+			</button>
 		</c:forEach>
 
 	</div>
@@ -307,6 +314,7 @@
 		<div class="hospitalTitle">리뷰</div>
 		총 ${reviewList.size() }개<br> 이 병원을 ${(averageHospitalRate * 20) }%가
 		추천하고 싶어해요
+
 		<div class="averageHospitalRate">
 			${averageHospitalRate }
 			<c:set var="averageInt"
@@ -317,6 +325,15 @@
 			<c:forEach var="i" begin="1" end="${5 - averageInt }">
 				<i class="star xi-star-o xi-x"></i>
 			</c:forEach>
+
+
+			<div class="barChart" style="width: 200px; height: 100px;">
+				<canvas id="myHorizontalBarChart"></canvas>
+			</div>
+
+			<button
+				onclick="location.href='../writeReview?mno=${sessionScope.mno}&hno=${hospital.hno}'">리뷰
+				작성</button>
 
 
 		</div>
@@ -344,12 +361,67 @@
 				<div class="reviewContent">${reviewList.rcontent }</div>
 				<div class="reviewDate">${reviewList.rdate }</div>
 				<div class="reviewer">${reviewList.mname }</div>
-				<button class="reviewLike">도움되요</button>
+				<button class="reviewLike">추천해요</button>
 				<hr>
 
 			</div>
 		</c:forEach>
 	</div>
+
+	<script>
+    // 만족도 데이터
+    var labels = ['매우만족', '만족', '보통', '별로', '매우 별로'];
+    var data = [${reviewCount.veryGood}, ${reviewCount.good}, ${reviewCount.normal}, ${reviewCount.bad}, ${reviewCount.veryBad}];
+
+    // 차트 데이터 설정
+    var chartData = {
+        labels: labels,
+        datasets: [{
+            label: '만족도 갯수',
+            backgroundColor: 'blue',
+            borderColor: 'blue',
+            borderWidth: 1,
+            data: data
+        }]
+    };
+
+    // 차트 옵션 설정
+    var options = {
+        indexAxis: 'y', // x축과 y축 바꾸기
+        scales: {
+            x: {
+                beginAtZero: true,
+                ticks: {
+                    display: false // Hide the x-axis ticks
+                },
+                grid: {
+                    display: false // Hide the x-axis grid lines
+                }
+            },
+            y: {
+                grid: {
+                    display: false // Hide the y-axis grid lines
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                display: false // Hide the labels
+            }
+        }
+    };
+
+    // 캔버스 가져오기
+    var ctx = document.getElementById('myHorizontalBarChart').getContext(
+        '2d');
+
+    // 수평 막대 차트 생성
+    var myHorizontalBarChart = new Chart(ctx, {
+        type: 'bar',
+        data: chartData,
+        options: options
+    });
+</script>
 
 
 

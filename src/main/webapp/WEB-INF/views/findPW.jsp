@@ -49,6 +49,12 @@
 		        return;
 		    }
 		    
+		    if (mid.length < 4) {
+		        $(".idInfo").text("아이디는 4글자 이상입니다.");
+		        $(".idInfo").css("color","red");
+		        return;
+		    }
+		    
 		    if (special.test(mid)) {
 		        $(".idInfo").text("아이디에 특수문자는 허용되지 않습니다.");
 		        $(".idInfo").css("color", "red");
@@ -56,7 +62,7 @@
 		    }
 		    
 		    if (checkMrrn == "") {
-		        $(".mrrnInfo").text("전화번호를 입력해주세요.");
+		        $(".mrrnInfo").text("주민번호를 입력해주세요.");
 		        $(".mrrnInfo").css("color","red");
 		        return;
 		    }

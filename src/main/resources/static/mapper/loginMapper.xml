@@ -18,7 +18,7 @@
 
 	<select id="loginCheck" parameterType="Map" resultType="Map">
 		SELECT
-		mno, mname, mid
+		mno, mname, mid, mhospitallike
 		FROM member
 		WHERE mid=#{mid} AND mpw=#{mpw};
 	</select>
@@ -34,5 +34,5 @@
 		FROM member
 		where mname=#{mname} AND mid=#{mid} AND mrrn=#{mrrn};
 	</select>
-
+	
 </mapper>

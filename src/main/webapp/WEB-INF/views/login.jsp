@@ -156,15 +156,15 @@ function deleteCookie(cookieName){
         <br> 
 	        <a href="./findID"  class="findID">&nbsp;&nbsp;아이디 찾기</a> 
 	        <a href="./findPW" class="findPW">&nbsp;&nbsp;비밀번호 찾기</a> 
-	        <a href="./register" class="join"> &nbsp;&nbsp;회원가입</a> <br>
+	        <a href="./join" class="join"> &nbsp;&nbsp;회원가입</a> <br>
 	        <input id="saveID" type="checkbox">아이디 저장하기
       	    <span class="info"></span><br>
        		<button class="loginBtn">Sign In →</button>
         <br>
     </div>
-    <div class=registerHospital-form">
+    <div class=joinHospital-form">
    		 	<span>병원 개설이 필요하신가요?</span>
-    		<a href="registerHospital" class="registerHospital">&nbsp;&nbsp;병원 등록하러 가기</a>
+    		<a href="./joinHospital" class="joinHospital">&nbsp;&nbsp;병원 등록하러 가기</a>
     </div>
 </body>
 </html>

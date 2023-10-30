@@ -47,6 +47,7 @@ public class LoginController {
 				session.setAttribute("mno", loginCheck.get("mno"));
 				session.setAttribute("mid", loginCheck.get("mid"));
 				session.setAttribute("mname", loginCheck.get("mname"));
+				session.setAttribute("mhospitallike", loginCheck.get("mhospitallike"));
 
 				json.put("PWresult", 1);
 				return json.toString();

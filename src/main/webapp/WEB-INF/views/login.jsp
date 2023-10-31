@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Login</title>
 
+<link href="./css/login.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
@@ -149,7 +150,12 @@ function deleteCookie(cookieName){
 
 </head>
 <body>
-    <h1>DR.HOME</h1>
+		<div id='search' class='search'>
+	<div id='icon' class='icon'>
+	<img id='personfilled' class='personfilled' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAYSURBVHgB7cABDQAAAMKg90/t7AEFAMANCRgAAbQRseIAAAAASUVORK5CYII='/>
+	</div>
+	</div>
+    <h1 class="logo-title">DR.HOME</h1>
     <div class="login-form">
 	        <input type="text" id="mid" name="mid" placeholder="아이디" maxlength="11"> <br>
 	        <input type="password" id="mpw" name="mpw" placeholder="패스워드" maxlength="8">

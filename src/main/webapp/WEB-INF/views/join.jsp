@@ -10,6 +10,7 @@
 
 <script src="./js/jquery-3.7.0.min.js"></script> 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 <script type="text/javascript">
 
 $(function(){
@@ -65,9 +66,10 @@ $(function(){
 	          }
 	       });//ajax끝
 		      
-		   }); //아이디체크
+		   }); //midCheck아이디체크
 		   
 		   $("#joinMemberBtn").click(function(){
+			   event.preventDefault(); //폼 전송 막기
 			   
 				let mid = $("#mid").val();
 				let mrrn = $("#firstMrrn").val() + "-" + $("#lastMrrn").val();
@@ -131,162 +133,164 @@ $(function(){
 	                    	    return false;
 				             } 
 				             else{
-				             }
-				          },
+				     			let mpw = $("#mpw").val();
+				    			let mpwDuplication = $("#mpwDuplication").val();
+				    			let mname = $("#mname").val();
+				    			let firstMrrn = $("#firstMrrn").val();
+				    			let lastMrrn = $("#lastMrrn").val();
+				    			let memail = $("#memail").val();
+				    			let mhomeaddr = $("#mhomeaddr").val();
+				    			let mhomeaddr2 = $("#mhomeaddr2").val();
+				    			let mcompanyaddr = $("#mcompanyaddr").val();
+				    			let mcompanyaddr2 = $("#mcompanyaddr2").val();
+				    		    let mgender = document.getElementById("mgender").value;
+				    		    let mbirth = document.getElementById("mbirth").value;
+				    			let firstNumber = $("#firstNumber").val();
+				    			let MiddleNumber = $("#MiddleNumber").val();
+				    			let lastNumber = $("#lastNumber").val();
+				    			let checkMrrn = $("#firstMrrn").val() + $("#lastMrrn").val();
+				    			let phoneNumber = $("#firstNumber").val() + $("#MiddleNumber").val() + $("#lastNumber").val();
+				    			let special = /[^a-zA-Z0-9가-힣]/; //특수문자 확인
+				    			let kor = /[가-힣]/; //한글 확인
+				    			let notNum = /[^0-9]/g; //숫자아닌지 확인
+				    			
+				    			//mid == "" || mpw == "" || mpwDuplication == "" || mname =="" || firstMrrn =="" || lastMrrn =="" || memail=="" || mhomeaddr=="" || mbirth=="" || firstNumber =="" || MiddleNumber=="" || lastNumber==""
+				    			
+				    		      if (mid == "") {
+				    		         $("#mid").focus();
+				    		         $("#idInfo").text("아이디를 입력해주세요.");
+				    		         $("#idInfo").css("color", "red");
+				    		         return false;
+				    		      }
+				    		      
+				    		      if (mid.length < 4) {
+				    			         $("#mid").focus();
+				    			         $("#idInfo").text("아이디를 4글자 이상 입력해주세요.");
+				    			         $("#idInfo").css("color", "red");
+				    			         return false;
+				    			      }
+				    			
+				    			  if (special.test(mid)) {
+				    			        $("#idInfo").text("아이디에 특수문자는 허용되지 않습니다.");
+				    			        $("#idInfo").css("color", "red");
+				    			        return false;
+				    			  }
+				    			  
+				    		       if (mpw == "") {
+				    		           $("#mpw").focus();
+				    		           $("#pwInfo").text("비밀번호를 입력해주세요.");
+				    		           $("#pwInfo").css("color", "red");
+				    		           return false;
+				    		        } 
+				    		       
+				    			      if (mpw.length < 4) {
+				    				         $("#mpw").focus();
+				    				         $("#pwInfo").text("비밀번호를 4글자 이상 입력해주세요.");
+				    				         $("#pwInfo").css("color", "red");
+				    				         return false;
+				    				      }
+				    		       
+				    		       if (mpwDuplication == "") {
+				    		           $("#mpw").focus();
+				    		           $("#pwInfo2").text("비밀번호를 확인해주세요.");
+				    		           $("#pwInfo2").css("color", "red");
+				    		           return false;
+				    		        } 
+				    		       
+				    		       if (mpw != mpwDuplication) {
+				    		           $("#mpwDuplication").focus();
+				    		           $("#pwInfo2").text("비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
+				    		           $("#pwInfo2").css("color", "red");
+				    		           return false;
+				    		        } else{
+				    			           $("#pwInfo2").text("비밀번호가 일치합니다.");
+				    			           $("#pwInfo2").css("color", "green");
+				    		        }
+				    		       
+				    		        if (mname == "") {
+				    			           $("#mname").focus();
+				    			           $("#nameInfo").text("이름을 입력해주세요.");
+				    			           $("#nameInfo").css("color", "red");
+				    			           return false;
+				    			        }
+				    		        
+				    			    if (!kor.test(mname)) {
+				    			        $("#nameInfo").text("한글만 입력 가능합니다.");
+				    			        $("#nameInfo").css("color","red");
+				    			        return false;
+				    			    }
+				    			    
+				    		         if (firstMrrn == "" || lastMrrn=="") {
+				    		              $("#mrrnInfo").text("주민번호를 모두 입력해주세요.");
+				    		              $("#mrrnInfo").css("color", "red");
+				    		              return false;
+				    		           } else{
+				    		        	   
+				    		           }
+				    		         
+				    				    if(notNum.test(checkMrrn) || checkMrrn.length !== 13) {
+				    				        $("#mrrnInfo").text("올바른 주민번호를 입력해주세요.");
+				    				        $("#mrrnInfo").css("color","red");
+				    				        return;
+				    				    } else{
+				    				    	
+				    				    }
+				    		        
+				    		        if (memail == "" ) {
+				    		           $("#memail").focus();
+				    		           $("#emailInfo").text("이메일을 입력해주세요.");
+				    		           $("#emailInfo").css("color", "red");
+				    		           return false;
+				    		        } 
+				    		        
+				    		        if (memail.indexOf("@") === -1) {
+				    			           $("#memail").focus();
+				    			           $("#emailInfo").text("올바른 이메일을 입력해주세요.");
+				    			           $("#emailInfo").css("color", "red");
+				    			           return false;
+				    			        } 
+
+				    		           if (mgender === "") {
+				    			              $("#mgender").focus();
+				    			              $("#genderInfo").text("성별을 선택하세요.");
+				    			              $("#genderInfo").css("color","red");
+				    			              return false;
+				    			           }
+				    		           
+				    		           if (mhomeaddr === "") {
+				    			              $("#mhomeaddr").focus();
+				    			              $("#homeAddrInfo").text("주소를 입력하세요.");
+				    			              $("#homeAddrInfo").css("color","red");
+				    			              return false;
+				    			           }
+				    		           
+				    		           if (mbirth === "") {
+				    		              $("#mbirth").focus();
+				    		              $("#birthInfo").text("생년월일을 선택하세요");
+				    		              $("#birthInfo").css("color","red");
+				    		              return false;
+				    		           }
+				    		           
+				    				    if (phoneNumber == "") {
+				    				        $("#phoneInfo").text("전화번호를 입력해주세요.");
+				    				        $("#phoneInfo").css("color","red");
+				    				        return false;
+				    				    }
+				    					
+				    				    if(notNum.test(phoneNumber) || phoneNumber.length !== 11) {
+				    				        $("#phoneInfo").text("올바른 전화번호를 입력해주세요.");
+				    				        $("#phoneInfo").css("color","red");
+				    				        return false;
+				    				    }
+				             }//esle 끝
+				    				    $("#join").submit();
+				          },//success 끝
 				          error:function(request, status, error){
 				             $("#mrrnInfo").text("오류가 발생함")
-				          }
+				          }//error끝
 				       });//mrrnCheck ajax끝        
-
-			let mpw = $("#mpw").val();
-			let mpwDuplication = $("#mpwDuplication").val();
-			let mname = $("#mname").val();
-			let firstMrrn = $("#firstMrrn").val();
-			let lastMrrn = $("#lastMrrn").val();
-			let memail = $("#memail").val();
-			let mhomeaddr = $("#mhomeaddr").val();
-			let mhomeaddr2 = $("#mhomeaddr2").val();
-			let mcompanyaddr = $("#mcompanyaddr").val();
-			let mcompanyaddr2 = $("#mcompanyaddr2").val();
-		    let mgender = document.getElementById("mgender").value;
-		    let mbirth = document.getElementById("mbirth").value;
-			let firstNumber = $("#firstNumber").val();
-			let MiddleNumber = $("#MiddleNumber").val();
-			let lastNumber = $("#lastNumber").val();
-			let checkMrrn = $("#firstMrrn").val() + $("#lastMrrn").val();
-			let phoneNumber = $("#firstNumber").val() + $("#MiddleNumber").val() + $("#lastNumber").val();
-			let special = /[^a-zA-Z0-9가-힣]/; //특수문자 확인
-			let kor = /[가-힣]/; //한글 확인
-			let notNum = /[^0-9]/g; //숫자아닌지 확인
-			
-			
-			//mid == "" || mpw == "" || mpwDuplication == "" || mname =="" || firstMrrn =="" || lastMrrn =="" || memail=="" || mhomeaddr=="" || mbirth=="" || firstNumber =="" || MiddleNumber=="" || lastNumber==""
-			
-		      if (mid == "") {
-		         $("#mid").focus();
-		         $("#idInfo").text("아이디를 입력해주세요.");
-		         $("#idInfo").css("color", "red");
-		         return false;
-		      }
-		      
-		      if (mid.length < 4) {
-			         $("#mid").focus();
-			         $("#idInfo").text("아이디를 4글자 이상 입력해주세요.");
-			         $("#idInfo").css("color", "red");
-			         return false;
-			      }
-			
-			  if (special.test(mid)) {
-			        $("#idInfo").text("아이디에 특수문자는 허용되지 않습니다.");
-			        $("#idInfo").css("color", "red");
-			        return false;
-			  }
-			  
-		       if (mpw == "") {
-		           $("#mpw").focus();
-		           $("#pwInfo").text("비밀번호를 입력해주세요.");
-		           $("#pwInfo").css("color", "red");
-		           return false;
-		        } 
-		       
-			      if (mpw.length < 4) {
-				         $("#mpw").focus();
-				         $("#pwInfo").text("비밀번호를 4글자 이상 입력해주세요.");
-				         $("#pwInfo").css("color", "red");
-				         return false;
-				      }
-		       
-		       if (mpwDuplication == "") {
-		           $("#mpw").focus();
-		           $("#pwInfo2").text("비밀번호를 확인해주세요.");
-		           $("#pwInfo2").css("color", "red");
-		           return false;
-		        } 
-		       
-		       if (mpw != mpwDuplication) {
-		           $("#mpwDuplication").focus();
-		           $("#pwInfo2").text("비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
-		           $("#pwInfo2").css("color", "red");
-		           return false;
-		        } else{
-			           $("#pwInfo2").text("비밀번호가 일치합니다.");
-			           $("#pwInfo2").css("color", "green");
-		        }
-		       
-		        if (mname == "") {
-			           $("#mname").focus();
-			           $("#nameInfo").text("이름을 입력해주세요.");
-			           $("#nameInfo").css("color", "red");
-			           return false;
-			        }
-		        
-			    if (!kor.test(mname)) {
-			        $("#nameInfo").text("한글만 입력 가능합니다.");
-			        $("#nameInfo").css("color","red");
-			        return;
-			    }
-			    
-		         if (firstMrrn == "" || lastMrrn=="") {
-		              $("#mrrnInfo").text("주민번호를 모두 입력해주세요.");
-		              $("#mrrnInfo").css("color", "red");
-		              return false;
-		           }
-		         
-				    if(notNum.test(checkMrrn) || checkMrrn.length !== 13) {
-				        $("#mrrnInfo").text("올바른 주민번호를 입력해주세요.");
-				        $("#mrrnInfo").css("color","red");
-				        return;
-				    }
-		        
-		        if (memail == "" ) {
-		           $("#memail").focus();
-		           $("#emailInfo").text("이메일을 입력해주세요.");
-		           $("#emailInfo").css("color", "red");
-		           return false;
-		        } 
-		        
-		        if (memail.indexOf("@") === -1) {
-			           $("#memail").focus();
-			           $("#emailInfo").text("올바른 이메일을 입력해주세요.");
-			           $("#emailInfo").css("color", "red");
-			           return false;
-			        } 
-
-		           if (mgender === "") {
-			              $("#mgender").focus();
-			              $("#genderInfo").text("성별을 선택하세요.");
-			              $("#genderInfo").css("color","red");
-			              return false;
-			           }
-		           
-		           if (mhomeaddr === "") {
-			              $("#mhomeaddr").focus();
-			              $("#homeAddrInfo").text("주소를 입력하세요.");
-			              $("#homeAddrInfo").css("color","red");
-			              return false;
-			           }
-		           
-		           if (mbirth === "") {
-		              $("#mbirth").focus();
-		              $("#birthInfo").text("생년월일을 선택하세요");
-		              $("#birthInfo").css("color","red");
-		              return false;
-		           }
-		           
-				    if (phoneNumber == "") {
-				        $("#phoneInfo").text("전화번호를 입력해주세요.");
-				        $("#phoneInfo").css("color","red");
-				        return;
-				    }
-					
-				    if(notNum.test(phoneNumber) || phoneNumber.length !== 11) {
-				        $("#phoneInfo").text("올바른 전화번호를 입력해주세요.");
-				        $("#phoneInfo").css("color","red");
-				        return;
-				    }
-
-	});
-});
+	});//joinMemberBtn끝
+});//function끝
 </script>
 
 <script type="text/javascript">
@@ -316,7 +320,7 @@ window.onload = function(){
 <body>
 	<h1>DR.Home 💊</h1>
 	<h2>닥터홈에 오신 것을 환영합니다!<br>계정 생성을 위해 아래 내용을 입력해주세요.</h2>
-	<form action="./join" method="post">
+	<form action="./join" method="post" id="join">
 	<h5>아이디</h5>
 	<input type="text" id="mid" name="mid" placeholder="아이디를 입력해주세요." maxlength="11">
 	<button type="button" id="midCheck"> 중복확인</button>
@@ -354,13 +358,13 @@ window.onload = function(){
     <br>
     <span id="genderInfo"></span>    
     <h5>집주소</h5>
-	<input type="text" id="mhomeaddr" name="mhomeaddr" placeholder="집주소를 입력해주세요." maxlength="8">
-	<input type="text" id="mhomeaddr2" name="mhomeaddr2" placeholder="상세주소를 입력해주세요." maxlength="8">
+	<input type="text" id="mhomeaddr" name="mhomeaddr" placeholder="집주소를 입력해주세요." >
+	<input type="text" id="mhomeaddr2" name="mhomeaddr2" placeholder="상세주소를 입력해주세요.">
     <br>
     <span id="homeAddrInfo"></span>
     <h5>회사주소(선택)</h5>
-	<input type="text" id="mcompanyaddr" name="mcompanyaddr" placeholder="회사 주소를 입력해주세요." maxlength="8">
-	<input type="text" id="mcompanyaddr2" name="mcompanyaddr2" placeholder="상세주소를 입력해주세요." maxlength="8">
+	<input type="text" id="mcompanyaddr" name="mcompanyaddr" placeholder="회사 주소를 입력해주세요.">
+	<input type="text" id="mcompanyaddr2" name="mcompanyaddr2" placeholder="상세주소를 입력해주세요.">
     <br>
     <span id="companyAddrInfo"></span>
     <h5>생일</h5>
@@ -374,6 +378,7 @@ window.onload = function(){
 	<br>
 	<span id="phoneInfo"></span>
 	<span id="joinInfo"></span>
+	<br>
 	<button type="submit" id="joinMemberBtn">회원가입 -></button>
 	</form>
 	<br>

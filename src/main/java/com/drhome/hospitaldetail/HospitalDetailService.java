@@ -3,6 +3,7 @@ package com.drhome.hospitaldetail;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,29 @@ public class HospitalDetailService {
 	public Map<String, Object> findDoctorByDno(int dno) {
 		return hospitalDetailDAO.findDoctorByDno(dno);
 	}
+
+	public ArrayList<Map<String, Object>> sortReviewByNew(int hno) {
+		// TODO Auto-generated method stub
+		return hospitalDetailDAO.sortReviewByNew(hno);
+	}
+
+	public ArrayList<Map<String, Object>> sortReviewByOld(int hno) {
+		return hospitalDetailDAO.sortReviewByOld(hno);
+	}
+
+	public ArrayList<Map<String, Object>> sortReviewByHighRate(int hno) {
+		return  hospitalDetailDAO.sortReviewByHighRate(hno);
+	}
+	
+	public ArrayList<Map<String, Object>> sortReviewByLowRate(int hno) {
+		return  hospitalDetailDAO.sortReviewByLowRate(hno);
+	}
+
+	public void countUpReviewLike(String reviewer) {
+		hospitalDetailDAO.countUpReviewLike(reviewer);
+	}
+
+
 
 
 }

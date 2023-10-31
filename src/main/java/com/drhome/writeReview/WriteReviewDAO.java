@@ -9,8 +9,10 @@ import org.apache.ibatis.annotations.Mapper;
 public interface WriteReviewDAO {
 
 
-	ArrayList<Map<String, Object>> findDoctorByHno(int hno);
+	ArrayList<Map<String, Object>> findDoctorByHno(Object hno);
 
-	Map<String, Object> findHospitalByHno(int hno);
+	Map<String, Object> findHospitalByHno(Object hno);
+
+	void writeReview(Map<String, Object> write);
 
 }

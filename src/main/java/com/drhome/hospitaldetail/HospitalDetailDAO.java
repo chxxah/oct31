@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.json.JSONArray;
 
 @Mapper
 public interface HospitalDetailDAO {
@@ -21,6 +22,16 @@ public interface HospitalDetailDAO {
 
 	void hospitalLike(String hname);
 
+
+	ArrayList<Map<String, Object>> sortReviewByNew(int hno);
+
+	ArrayList<Map<String, Object>> sortReviewByOld(int hno);
+
+	ArrayList<Map<String, Object>> sortReviewByHighRate(int hno);
+
+	ArrayList<Map<String, Object>> sortReviewByLowRate(int hno);
+
+	void countUpReviewLike(String reviewer);
 
 
 

@@ -11,12 +11,16 @@ public class WriteReviewService {
 	@Autowired
 	private WriteReviewDAO writeReviewDAO;
 
-	public ArrayList<Map<String, Object>> findDoctorByHno(int hno) {
+	public ArrayList<Map<String, Object>> findDoctorByHno(Object hno) {
 		// TODO Auto-generated method stub
 		return writeReviewDAO.findDoctorByHno(hno);
 	}
 
-	public Map<String, Object> findHospitalByHno(int hno) {
+	public Map<String, Object> findHospitalByHno(Object hno) {
 		return writeReviewDAO.findHospitalByHno(hno);
+	}
+
+	public void writeReview(Map<String, Object> write) {
+		writeReviewDAO.writeReview(write);
 	}
 }

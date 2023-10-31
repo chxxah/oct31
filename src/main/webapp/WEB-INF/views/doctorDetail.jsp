@@ -18,7 +18,7 @@
 <body>
 	<h1>main</h1>
 	<div>
-		<img alt="의사사진" src="">
+		<img alt="의사사진" src="${doctorDetail.dimg }">
 	</div>
 	<div class="doctorName">${doctorDetail.dname }</div>
 	<c:if test="${doctorDetail.dspecialist ==1 }">전문의</c:if>
